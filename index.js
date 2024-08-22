@@ -55,12 +55,12 @@ app.get('/api/weekly-summary', async (req, res) => {
         FROM 
             chart
         WHERE 
-            Date BETWEEN COALESCE(?, DATE_FORMAT(CURDATE(), '%Y-%m-01')) 
+            date BETWEEN COALESCE(?, DATE_FORMAT(CURDATE(), '%Y-%m-01')) 
                      AND COALESCE(?, LAST_DAY(CURDATE())) 
         GROUP BY 
-            DAYOFWEEK(Date)
+            DAYOFWEEK(date)
         ORDER BY 
-            FIELD(DAYOFWEEK(Date), 2, 3, 4, 5, 6, 7, 1); 
+            FIELD(DAYOFWEEK(date), 2, 3, 4, 5, 6, 7, 1); 
     `;
 
     const [rows] = await connection.execute(query, [queryStartDate, queryEndDate]);
